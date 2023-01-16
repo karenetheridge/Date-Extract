@@ -249,7 +249,7 @@ set to 2019. This is what your users would probably expect.
 
 =head1 METHODS
 
-=head2 new PARAMHASH => C<Date::Extract>
+=head2 C<new(PARAMHASH)> => C<Date::Extract>
 
 =head3 arguments
 
@@ -334,7 +334,7 @@ Returns all dates found in the string, in chronological order.
 
 =back
 
-=head2 extract text, ARGS => dates
+=head2 C<extract(text, ARGS) => dates
 
 Takes an arbitrary amount of text and extracts one or more dates from it. The
 return value will be zero or more dates, which by default are L<DateTime>
@@ -354,23 +354,23 @@ method. Just C<< Date::Extract->extract($foo) >> will work.
 
 =over 4
 
-=item * today; tomorrow; yesterday
+=item * C<today>; C<tomorrow>; C<yesterday>
 
-=item * last Friday; next Monday; previous Sat
+=item * C<last Friday>; C<next Monday>; C<previous Sat>
 
-=item * Monday; Mon
+=item * C<Monday>; C<Mon>
 
-=item * November 13th, 1986; Nov 13, 1986
+=item * C<November 13th, 1986>; C<Nov 13, 1986>
 
-=item * 13 November 1986; 13 Nov 1986
+=item * C<13 November 1986>; C<13 Nov 1986>
 
-=item * November 13th; Nov 13
+=item * C<November 13th>; C<Nov 13>
 
-=item * 13 Nov; 13th November
+=item * C<13 Nov>; C<13th November>
 
-=item * 1986/11/13; 1986-11-13
+=item * C<1986/11/13>; C<1986-11-13>
 
-=item * 11-13-86; 11/13/1986
+=item * C<11-13-86>; C<11/13/1986>
 
 =back
 
@@ -384,6 +384,8 @@ here.
 L<DateTime::Format::Natural>, L<Time::ParseDate>, L<Date::Manip>
 
 =head1 ACKNOWLEDGEMENTS
+
+=for :stopwords Schubiger
 
 Thanks to Steven Schubiger for writing the fine L<DateTime::Format::Natural>.
 We still use it, but it doesn't quite fill all the particular needs we have.
