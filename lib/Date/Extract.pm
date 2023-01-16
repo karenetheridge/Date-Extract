@@ -225,6 +225,7 @@ sub _extract {
 __END__
 
 =pod
+
 =head1 SYNOPSIS
 
     my $parser = Date::Extract->new();
