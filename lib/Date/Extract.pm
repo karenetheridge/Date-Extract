@@ -1,4 +1,6 @@
 package Date::Extract;
+# ABSTRACT: Extract probable dates from strings
+
 use strict;
 use warnings;
 use DateTime::Format::Natural;
@@ -222,10 +224,7 @@ sub _extract {
 
 __END__
 
-=head1 NAME
-
-Date::Extract - extract probable dates from strings
-
+=pod
 =head1 SYNOPSIS
 
     my $parser = Date::Extract->new();
@@ -383,22 +382,9 @@ here.
 
 L<DateTime::Format::Natural>, L<Time::ParseDate>, L<Date::Manip>
 
-=head1 AUTHOR
-
-Shawn M Moore
-Best Practical Solutions <modules@bestpractical.com>
-
 =head1 ACKNOWLEDGEMENTS
 
 Thanks to Steven Schubiger for writing the fine L<DateTime::Format::Natural>.
 We still use it, but it doesn't quite fill all the particular needs we have.
 
-=head1 COPYRIGHT & LICENSE
-
-Copyright 2007-2009 Best Practical Solutions.
-
-This program is free software; you can redistribute it and/or modify it
-under the same terms as Perl itself.
-
 =cut
-
