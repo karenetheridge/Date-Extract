@@ -1,0 +1,227 @@
+=pod
+
+=encoding UTF-8
+
+=head1 NAME
+
+Date::Extract - Extract probable dates from strings
+
+=head1 VERSION
+
+version 0.07
+
+=head1 SYNOPSIS
+
+    my $parser = Date::Extract->new();
+    my $dt = $parser->extract($arbitrary_text)
+        or die "No date found.";
+    return $dt->ymd;
+
+=head1 MOTIVATION
+
+There are already a few modules for getting a date out of a string.
+L<DateTime::Format::Natural> should be your first choice. There's also
+L<Time::ParseDate> which fits many formats. Finally, you can coerce
+L<Date::Manip> to do your bidding.
+
+But I needed something that will take an arbitrary block of text, search it for
+something that looks like a date string, and extract it. This module fills this
+niche. By design it will produce few false positives. This means it will not
+catch nearly everything that looks like a date string. So if you have the string
+"do homework for class 2019" it won't return a L<DateTime> object with the year
+set to 2019. This is what your users would probably expect.
+
+=head1 METHODS
+
+=head2 C<new(PARAMHASH)> => C<Date::Extract>
+
+=head3 arguments
+
+=over 4
+
+=item format
+
+Choose what format the extracted date(s) will be. The default is "DateTime",
+which will return L<DateTime> object(s). Other option include "verbatim" (return
+the original text), or "epoch" (return Unix timestamp).
+
+=item time_zone
+
+Only relevant when C<format> is set to "DateTime".
+
+Forces a particular time zone to be set (this actually matters, as "tomorrow"
+on Monday at 11 PM means something different than "tomorrow" on Tuesday at 1
+AM).
+
+By default it will use the "floating" time zone. See the documentation for
+L<DateTime>.
+
+This controls both the input time zone and output time zone.
+
+=item prefers
+
+This argument decides what happens when an ambiguous date appears in the
+input. For example, "Friday" may refer to any number of Fridays. The valid
+options for this argument are:
+
+=over 4
+
+=item nearest
+
+Prefer the nearest date. This is the default.
+
+=item future
+
+Prefer the closest future date.
+
+=item past
+
+Prefer the closest past date. B<NOT YET SUPPORTED>.
+
+=back
+
+=item returns
+
+If the text has multiple possible dates, then this argument determines which
+date will be returned. By default it's 'first'.
+
+=over 4
+
+=item first
+
+Returns the first date found in the string.
+
+=item last
+
+Returns the final date found in the string.
+
+=item earliest
+
+Returns the date found in the string that chronologically precedes any other
+date in the string.
+
+=item latest
+
+Returns the date found in the string that chronologically follows any other
+date in the string.
+
+=item all
+
+Returns all dates found in the string, in the order they were found in the
+string.
+
+=item all_cron
+
+Returns all dates found in the string, in chronological order.
+
+=back
+
+=back
+
+=head2 C<extract(text, ARGS) => dates
+
+Takes an arbitrary amount of text and extracts one or more dates from it. The
+return value will be zero or more dates, which by default are L<DateTime>
+objects (but can be customized with the C<format> argument). If called in scalar
+context, only one will be returned, even if the C<returns> argument specifies
+multiple possible return values.
+
+See the documentation of C<new> for the configuration of this method. Any
+arguments passed into this method will trump those from the constructor.
+
+You may reuse a parser for multiple calls to C<extract>.
+
+You do not need to have an instantiated C<Date::Extract> object to call this
+method. Just C<< Date::Extract->extract($foo) >> will work.
+
+=head1 FORMATS HANDLED
+
+=over 4
+
+=item * C<today>; C<tomorrow>; C<yesterday>
+
+=item * C<last Friday>; C<next Monday>; C<previous Sat>
+
+=item * C<Monday>; C<Mon>
+
+=item * C<November 13th, 1986>; C<Nov 13, 1986>
+
+=item * C<13 November 1986>; C<13 Nov 1986>
+
+=item * C<November 13th>; C<Nov 13>
+
+=item * C<13 Nov>; C<13th November>
+
+=item * C<1986/11/13>; C<1986-11-13>
+
+=item * C<11-13-86>; C<11/13/1986>
+
+=back
+
+=head1 CAVEATS
+
+This module is I<intentionally> very simple. Surprises are I<not> welcome
+here.
+
+=head1 SEE ALSO
+
+L<DateTime::Format::Natural>, L<Time::ParseDate>, L<Date::Manip>
+
+=head1 ACKNOWLEDGEMENTS
+
+=for :stopwords Schubiger
+
+Thanks to Steven Schubiger for writing the fine L<DateTime::Format::Natural>.
+We still use it, but it doesn't quite fill all the particular needs we have.
+
+=head1 SUPPORT
+
+Bugs may be submitted through L<the RT bug tracker|https://rt.cpan.org/Public/Dist/Display.html?Name=Date-Extract>
+(or L<bug-Date-Extract@rt.cpan.org|mailto:bug-Date-Extract@rt.cpan.org>).
+
+I am also usually active on irc, as 'ether' at C<irc.perl.org> and C<irc.libera.chat>.
+
+=head1 AUTHOR
+
+Shawn M Moore, <sartak@gmail.com>
+
+=head1 CONTRIBUTORS
+
+=for stopwords Karen Etheridge Steven Haryanto Jim Brandt Alex Vandiver Jesse Vincent Thomas Sibley
+
+=over 4
+
+=item *
+
+Karen Etheridge <ether@cpan.org>
+
+=item *
+
+Steven Haryanto <stevenharyanto@gmail.com>
+
+=item *
+
+Jim Brandt <jbrandt@bestpractical.com>
+
+=item *
+
+Alex Vandiver <alex@chmrr.net>
+
+=item *
+
+Jesse Vincent <jesse@bestpractical.com>
+
+=item *
+
+Thomas Sibley <trs@bestpractical.com>
+
+=back
+
+=head1 COPYRIGHT AND LICENCE
+
+This software is copyright (c) 2007 by Best Practical Solutions.
+
+This is free software; you can redistribute it and/or modify it under
+the same terms as the Perl 5 programming language system itself.
+
+=cut
